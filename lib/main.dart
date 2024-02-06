@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   var curent = WordPair.random();
-
   void getNext() {
     curent = WordPair.random();
     notifyListeners();
@@ -39,8 +38,8 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final appState = context.watch<MyAppState>();
     final pair = appState.curent;
-    return Scaffold(
-        body: Center(
+
+    return Card(
       child: Column(
         children: [
           Text('乱数調整'),
@@ -54,6 +53,22 @@ class MyHomePage extends StatelessWidget {
           ),
         ],
       ),
-    ));
+    );
   }
+}
+
+@override
+Widget build(BuildContext context) {
+  final theme = Theme.of(context);
+  final style = theme.textTheme.displayMedium!
+      .copyWith(color: theme.colorScheme.onPrimary);
+
+  var pair;
+  return Padding(
+    padding: const EdgeInsets.all(20),
+    child: Text(
+      pair.asLowerCase,
+      style: style,
+    ),
+  );
 }
