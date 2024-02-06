@@ -27,19 +27,33 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   var curent = WordPair.random();
+
+  void getNext() {
+    curent = WordPair.random();
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
+    final appState = context.watch<MyAppState>();
+    final pair = appState.curent;
     return Scaffold(
-      body: Column(
+        body: Center(
+      child: Column(
         children: [
           Text('乱数調整'),
-          Text(appState.curent.asPascalCase),
+          Text(pair.asLowerCase),
+          ElevatedButton(
+            onPressed: () {
+              appState.getNext();
+              print('ボタンをタップしました。');
+            },
+            child: Text('ボタン'),
+          ),
         ],
       ),
-    );
+    ));
   }
 }
